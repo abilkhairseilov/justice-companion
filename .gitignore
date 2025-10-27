@@ -35,3 +35,6 @@ Thumbs.db
 # Sensitive information (example)
 config.ini
 .env
+
+# Datasets
+*.csv
