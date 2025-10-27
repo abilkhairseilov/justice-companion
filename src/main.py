@@ -1,5 +1,9 @@
 class AIHelper:
     def fib(self, n: int) -> int:
+        '''
+        Calculate the nth Fibonacci number.
+        `n`: `int` - The position in the Fibonacci sequence.
+        '''
         if n == 1:
             return 1
         if n == 0:
@@ -11,4 +15,4 @@ if __name__ == "__main__":
     print("Hello World!")
 
 AI = AIHelper()
-print(AI.fib(5))
+print(AI.fib(10))
