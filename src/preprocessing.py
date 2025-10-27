@@ -15,24 +15,25 @@ import numpy as np
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
+from scipy import stats
 
 # ------------------------------------------------
 # Step 2: Load dataset
 # Replace 'dataset.csv' with your CSV file name
 # ------------------------------------------------
-df = pd.read_csv('dataset.csv')
+df = pd.read_csv("countries.csv")
 
 # Preview the dataset
 print("Initial Dataset:\n", df.head())
 
 # ------------------------------------------------
 # Step 3: Handle missing values
-# Strategy: 
+# Strategy:
 # - For numeric columns: fill with median
 # - For categorical columns (country name): fill with mode
 # ------------------------------------------------
-numeric_cols = ['LifeExpectancy', 'GDP_per_capita', 'CO2_per_capita', 'Child_mortality']
-categorical_cols = ['Country']
+numeric_cols = ["gdp_pcap", "co2_pcap", "child_mort_pcap", "lex"]
+categorical_cols = ["name"]
 
 # Fill numeric missing values with median
 for col in numeric_cols:
@@ -52,7 +53,7 @@ print("\nMissing Values after imputation:\n", df.isnull().sum())
 # Convert 'Country' column to numeric using LabelEncoder
 # ------------------------------------------------
 le = LabelEncoder()
-df['Country_encoded'] = le.fit_transform(df['Country'])
+df["Country_encoded"] = le.fit_transform(df["name"])
 
 # Drop original country column if not needed
 # df.drop('Country', axis=1, inplace=True)
@@ -61,17 +62,16 @@ df['Country_encoded'] = le.fit_transform(df['Country'])
 # Step 5: Flag obvious outliers
 # Using z-score method to flag numeric outliers
 # ------------------------------------------------
-from scipy import stats
 
 z_scores = np.abs(stats.zscore(df[numeric_cols]))
 threshold = 3  # Common threshold for extreme outliers
-outliers = (z_scores > threshold)
+outliers = z_scores > threshold
 
 # Add a column to indicate if row has any outlier
-df['Outlier_Flag'] = outliers.any(axis=1)
+df["Outlier_Flag"] = outliers.any(axis=1)
 
 # Optional: inspect outliers
-print("\nRows flagged as outliers:\n", df[df['Outlier_Flag']])
+print("\nRows flagged as outliers:\n", df[df["Outlier_Flag"]])
 
 # ------------------------------------------------
 # Step 6: Normalize numeric values (0-1 scaling)
@@ -80,7 +80,7 @@ print("\nRows flagged as outliers:\n", df[df['Outlier_Flag']])
 scaler = MinMaxScaler()
 
 # Features to scale (exclude target)
-features_to_scale = ['GDP_per_capita', 'CO2_per_capita', 'Child_mortality']
+features_to_scale = ["gdp_pcap", "co2_pcap", "child_mort_pcap"]
 df[features_to_scale] = scaler.fit_transform(df[features_to_scale])
 
 # Optional: check the scaled values
@@ -89,7 +89,7 @@ print("\nScaled numeric features:\n", df[features_to_scale].head())
 # ------------------------------------------------
 # Step 7: Save preprocessed dataset
 # ------------------------------------------------
-df.to_csv('dataset_preprocessed.csv', index=False)
+df.to_csv("dataset_preprocessed.csv", index=False)
 print("\nPreprocessing complete. Saved as 'dataset_preprocessed.csv'.")
 
 # ------------------------------------------------
