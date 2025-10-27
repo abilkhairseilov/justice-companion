@@ -21,7 +21,7 @@ from scipy import stats
 # Step 2: Load dataset
 # Replace 'dataset.csv' with your CSV file name
 # ------------------------------------------------
-df = pd.read_csv("countries.csv")
+df = pd.read_csv("data/countries.csv")
 
 # Preview the dataset
 print("Initial Dataset:\n", df.head())
