@@ -1,14 +1,7 @@
-import pandas as pd
 import numpy as np
-from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-import matplotlib.pyplot as plt
-import seaborn as sns
-from scipy import stats
+import pandas as pd
 
 dataset = pd.read_csv("data/dataset_preprocessed.csv")
-gdp_pcap = dataset["gdp_pcap"]
-co2_pcap = dataset["co2_pcap"]
-child_mort_pcap = dataset["child_mort_pcap"]
 
 X = dataset[["gdp_pcap", "co2_pcap", "child_mort_pcap"]].values
 y = dataset["lex"].values
@@ -50,12 +43,27 @@ for epoch in range(epochs):
     w2 -= lr * dL_dw2
     b2 -= lr * dL_db2
 
-    if epoch % 100 == 0:
-        print(f"epoch: {epoch}\nloss: {loss}")
+    # if epoch % 100 == 0:
+    #     print(f"epoch: {epoch}\nloss: {loss}")
 
 
 # training done
 # print(loss)
 # print("PREDICTED Y")
-print(f"epoch: {epoch}\nloss: {loss}")
-print(y_pred)
+# print(f"epoch: {epoch}\nloss: {loss}")
+# print(y_pred)
+
+
+# actual prediction
+# we can try predicting with actual values of a country, inputting them to the MLP and comparing results with the actual lex
+# qatar has:
+# 0.15619315758173222, 0.15925531524253664, 0.04098349977481082, 77.31
+
+qatar = np.array([0.15619315758173222, 0.15925531524253664, 0.04098349977481082])
+
+z1 = qatar @ w1 + b1
+a1 = np.maximum(0, z1)
+y_pred = a1 @ w2 + b2
+
+
+print(f"y_pred: {y_pred}, actual lex: 77.31")
