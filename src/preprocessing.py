@@ -53,7 +53,7 @@ print("\nMissing Values after imputation:\n", df.isnull().sum())
 # Convert 'Country' column to numeric using LabelEncoder
 # ------------------------------------------------
 le = LabelEncoder()
-df["Country_encoded"] = le.fit_transform(df["name"])
+# df["Country_encoded"] = le.fit_transform(df["name"])
 
 # Drop original country column if not needed
 # df.drop('Country', axis=1, inplace=True)
@@ -68,10 +68,10 @@ threshold = 3  # Common threshold for extreme outliers
 outliers = z_scores > threshold
 
 # Add a column to indicate if row has any outlier
-df["Outlier_Flag"] = outliers.any(axis=1)
+# df["Outlier_Flag"] = outliers.any(axis=1)
 
 # Optional: inspect outliers
-print("\nRows flagged as outliers:\n", df[df["Outlier_Flag"]])
+# print("\nRows flagged as outliers:\n", df[df["Outlier_Flag"]])
 
 # ------------------------------------------------
 # Step 6: Normalize numeric values (0-1 scaling)
@@ -89,7 +89,7 @@ print("\nScaled numeric features:\n", df[features_to_scale].head())
 # ------------------------------------------------
 # Step 7: Save preprocessed dataset
 # ------------------------------------------------
-df.to_csv("dataset_preprocessed.csv", index=False)
+df.to_csv("data/dataset_preprocessed.csv", index=False)
 print("\nPreprocessing complete. Saved as 'dataset_preprocessed.csv'.")
 
 # ------------------------------------------------

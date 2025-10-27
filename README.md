@@ -1,12 +1,24 @@
 # JusticeCompanion
 
 ## Requirements
-python>=3.14
+Check `requirements.txt`
 
-## Installation
+## Setup
 
 Make a virtual environment:
-```py
+```sh
 python -m venv .venv/
 ```
+Install required modules and stubs:
+```sh
+./.venv/Scripts/python -m pip install -r ./requirements.txt
+```
 
+## Todo
+- [x] Preprocess data
+- [ ] Train model
+- [ ] Compare/predict results
+- [ ] Make running efficient
+
+## Legal
+Licensed under the MIT license. Check LICENSE for details.
