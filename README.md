@@ -14,10 +14,24 @@ Install required modules and stubs:
 ./.venv/Scripts/python -m pip install -r ./requirements.txt
 ```
 
+Make sure you enable your venv before doing any work:
+```sh
+./.venv/Scripts/activate
+```
+
+## Deployment
+
+To run the app in development, run:
+```sh
+flask run
+```
+This will run the app in development mode.
+
 ## Todo
 - [x] Preprocess data
-- [ ] Train model
-- [ ] Compare/predict results
+- [x] Train model
+- [x] Compare/predict results
+- [x] Develop web app
 - [ ] Make running efficient
 
 ## Legal
