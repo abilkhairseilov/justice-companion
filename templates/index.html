@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>LifePredictor — Dashboard</title>
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" />
 </head>
 <body>
   <!-- HEADER: semantic + accessible -->
@@ -87,7 +87,7 @@
         <h2 id="predict-title">Predict Life Expectancy</h2>
         <p class="muted">Enter the required demographic and environmental metrics below to get your prediction.</p>
 
-        <form id="predict-form" class="predict-form" novalidate>
+        <form id="predict-form" class="predict-form" novalidate >
           <label>
             GDP Per Capita (USD)
             <input type="number" id="gdp" name="gdp" value="75000" min="0" step="1" required />
@@ -100,7 +100,7 @@
 
           <label>
             Child Mortality Per 1000 Live Births
-            <input type="number" id="childMort" name="childMort" value="30" min="0" step="1" required />
+            <input type="number" id="mortality" name="mortality" value="30" min="0" step="1" required />
           </label>
 
           <div class="form-actions">
@@ -183,6 +183,6 @@
     </div>
   </footer>
 
-  <script src="js/script.js" defer></script>
+  <script src="{{url_for('static',filename='js/script.js')}}" defer></script>
 </body>
 </html>

@@ -46,33 +46,31 @@ document.addEventListener('DOMContentLoaded', () => {
   const resultNumber = document.querySelector('.value-number');
   const resultText = document.getElementById('result-text');
 
-  // simple mock model: base life expectancy 50 + (log GDP contribution) - (co2 * 0.6) - (childMort * 0.12)
-  function mockPredict(gdp, co2, childMort) {
-    // guard and transforms
-    const g = Math.max(1, Number(gdp));
-    const c = Math.max(0, Number(co2));
-    const child = Math.max(0, Number(childMort));
-    const gdpFactor = Math.log10(g + 1) * 6.5; // scaled
-    let score = 50 + gdpFactor - (c * 0.6) - (child * 0.12);
-    // clamp realistic range
-    score = Math.max(25, Math.min(95, score));
-    return Math.round(score * 10) / 10; // one decimal
+  async function predict(gdp, co2, mortality) {
+		const response = await fetch("/predict", {
+				method: "POST",
+				headers: { "Content-type": "application/json"},
+				body: JSON.stringify({gdp, co2, mortality})
+		});
+
+		const data = await response.json();
+		return data.prediction;
   }
 
   if (form) {
-    form.addEventListener('submit', (evt) => {
+    form.addEventListener('submit', async (evt) => {
       evt.preventDefault();
       const gdp = form.querySelector('#gdp').value;
       const co2 = form.querySelector('#co2').value;
-      const child = form.querySelector('#childMort').value;
+      const mortality = form.querySelector('#mortality').value;
 
       // basic validation
-      if (!gdp || !co2 || !child) {
+      if (!gdp || !co2 || !mortality) {
         resultText.textContent = 'Please complete all fields.';
         return;
       }
 
-      const prediction = mockPredict(gdp, co2, child);
+      const prediction = await predict(gdp, co2, mortality);
       resultNumber.textContent = prediction;
       resultText.textContent = `This projection suggests a life expectancy of ${prediction} years based on the provided metrics.`;
       resultNumber.parentElement.scrollIntoView({ behavior: 'smooth', block: 'center' });

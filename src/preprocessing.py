@@ -1,4 +1,3 @@
-# this is a vibecoded mess
 # ================================
 # Life Expectancy Dataset Preprocessing
 # ================================
@@ -16,6 +15,7 @@ from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy import stats
+import pickle
 
 # ------------------------------------------------
 # Step 2: Load dataset
@@ -82,6 +82,9 @@ scaler = MinMaxScaler()
 # Features to scale (exclude target)
 features_to_scale = ["gdp_pcap", "co2_pcap", "child_mort_pcap"]
 df[features_to_scale] = scaler.fit_transform(df[features_to_scale])
+
+with open("models/scaler.pkl", "wb") as f:
+    pickle.dump(scaler, f)
 
 # Optional: check the scaled values
 print("\nScaled numeric features:\n", df[features_to_scale].head())
