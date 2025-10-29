@@ -1,188 +1,139 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>LifePredictor — Dashboard</title>
-  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}" />
-</head>
-<body>
-  <!-- HEADER: semantic + accessible -->
-  <header class="site-header">
-    <div class="header-inner container">
-      <a class="brand" href="#" aria-label="LifePredictor Home">
-        <img src="assets/images/logo-placeholder.svg" alt="" class="brand-mark" />
-        <span class="brand-text">LifePredictor</span>
-      </a>
+<!-- templates/index.html -->
+{% extends "_base.html" %}
 
-      <nav class="top-nav" aria-label="Main Navigation">
-        <ul>
-          <li><a href="#" class="active">Dashboard</a></li>
-          <li><a href="#">History</a></li>
-          <li><a href="#">About</a></li>
-        </ul>
-      </nav>
+{% block title %}Dashboard — LifePredictor{% endblock %}
 
-      <div class="header-right">
-        <button class="icon-btn" aria-label="Help">❍</button>
-        <button class="icon-btn" aria-label="Settings">⚖</button>
-        <img src="assets/images/avatar-placeholder.png" alt="User avatar" class="avatar" />
-        <button id="mobile-menu-toggle" class="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-menu">
-          ☰
-        </button>
-      </div>
-    </div>
+{% block content %}
+<!-- LEFT SIDEBAR -->
+<aside class="sidebar" aria-labelledby="how-title">
+		<div class="card sidebar-card">
+				<h2 id="how-title" class="sidebar-title">How It Works</h2>
 
-    <!-- mobile menu -->
-    <div id="mobile-menu" class="mobile-menu" aria-hidden="true">
-      <ul>
-        <li><a href="#">Dashboard</a></li>
-        <li><a href="#">History</a></li>
-        <li><a href="#">About</a></li>
-      </ul>
-    </div>
-  </header>
+				<div class="accordion">
+						<button class="acc-item" aria-expanded="true">
+								<span>Our Prediction Model</span>
+								<span class="chev">▾</span>
+						</button>
 
-  <div class="page container layout-grid">
-    <!-- LEFT SIDEBAR: "How It Works" -->
-    <aside class="sidebar" aria-labelledby="how-title">
-      <div class="card sidebar-card">
-        <h2 id="how-title" class="sidebar-title">How It Works</h2>
+						<div class="acc-panel">
+								<p>
+								Our model utilizes a robust regression algorithm trained on global demographic
+								and environmental data from the past five decades to forecast life expectancy.
+								</p>
+						</div>
 
-        <div class="accordion">
-          <button class="acc-item" aria-expanded="true">
-            <span>Our Prediction Model</span>
-            <span class="chev">▾</span>
-          </button>
-          <div class="acc-panel">
-            <p>
-              Our model utilizes a robust regression algorithm trained on global demographic
-              and environmental data from the past five decades to forecast life expectancy.
-            </p>
-          </div>
+						<button class="acc-item" aria-expanded="false">
+								<span>Data Sources</span>
+								<span class="chev">▸</span>
+						</button>
+						<div class="acc-panel">
+								<p>World Bank, WHO, UN, open datasets and peer-reviewed sources.</p>
+						</div>
 
-          <button class="acc-item" aria-expanded="false">
-            <span>Data Sources</span>
-            <span class="chev">▸</span>
-          </button>
-          <div class="acc-panel">
-            <p>World Bank, WHO, UN, open datasets and peer-reviewed sources.</p>
-          </div>
+						<button class="acc-item" aria-expanded="false">
+								<span>Disclaimer</span>
+								<span class="chev">▸</span>
+						</button>
+						<div class="acc-panel">
+								<p>Predictions are indicative and not medical advice. Use responsibly.</p>
+						</div>
+				</div>
+		</div>
+</aside>
 
-          <button class="acc-item" aria-expanded="false">
-            <span>Disclaimer</span>
-            <span class="chev">▸</span>
-          </button>
-          <div class="acc-panel">
-            <p>Predictions are indicative and not medical advice. Use responsibly.</p>
-          </div>
-        </div>
-      </div>
-    </aside>
+<!-- MAIN CONTENT -->
+<main class="main-content">
 
-    <!-- MAIN: form card, result card, chart card -->
-    <main class="main-content">
-      <!-- Prediction form -->
-      <section class="card form-card" aria-labelledby="predict-title">
-        <h2 id="predict-title">Predict Life Expectancy</h2>
-        <p class="muted">Enter the required demographic and environmental metrics below to get your prediction.</p>
+		<div class="card sidebar-card">
+				<h2 class="sidebar-title">Why Life Expectancy?</h2>
+				<p>
+				Life expectancy is influenced by many factors — from economic conditions and healthcare access to environmental quality.
+				By exploring different countries and their data, you can see how decisions and policies impact real lives over decades.
+				</p>
+		</div>
 
-        <form id="predict-form" class="predict-form" novalidate >
-          <label>
-            GDP Per Capita (USD)
-            <input type="number" id="gdp" name="gdp" value="75000" min="0" step="1" required />
-          </label>
+		<div class="card sidebar-card">
+				<h2 class="sidebar-title">Try It Yourself</h2>
+				<p>
+				Select a country from the dropdown or adjust the sliders to explore how GDP, CO₂ emissions, and child mortality
+				influence life expectancy. Compare nations and uncover surprising insights.
+				</p>
+		</div>
 
-          <label>
-            CO₂ Emissions Per Capita (tonnes)
-            <input type="number" id="co2" name="co2" value="5.2" min="0" step="0.1" required />
-          </label>
 
-          <label>
-            Child Mortality Per 1000 Live Births
-            <input type="number" id="mortality" name="mortality" value="30" min="0" step="1" required />
-          </label>
+		<!-- Prediction form -->
+		<section class="card form-card" aria-labelledby="predict-title">
+				<h2 id="predict-title">Predict Life Expectancy</h2>
+				<p class="muted">Enter the required demographic and environmental metrics below to get your prediction.</p>
 
-          <div class="form-actions">
-            <button type="submit" class="btn primary" id="predict-btn">Predict Life Expectancy</button>
-          </div>
-        </form>
-      </section>
+				<form id="predict-form" class="predict-form" novalidate>
 
-      <!-- Predicted result -->
-      <section class="card result-card" aria-live="polite" aria-atomic="true">
-        <h3 class="result-title">Predicted Life Expectancy</h3>
-        <div class="result-value" id="result-value">
-          <span class="value-number">—</span>
-          <span class="value-unit">years</span>
-        </div>
-        <p id="result-text" class="muted small">Enter metrics and click Predict Life Expectancy.</p>
-      </section>
+						<label>
+								Select Country:
+								<select id="country-select">
+										<option value="">--Choose--</option>
+										{% for country in countries %}
+										<option value="{{ country }}">{{ country }}</option>
+										{% endfor %}
+								</select>
+						</label>
+						<label>
+								GDP Per Capita (USD)
+								<input type="number" id="gdp" name="gdp" value="75000" min="1000" max="100000" step="1" required />
+								<input type="range" min="1000" max="100000" id="gdp-slider" oninput="gdp.value = this.value" />
+						</label>
 
-      <!-- Chart -->
-      <section class="card chart-card" aria-labelledby="chart-title">
-        <h3 id="chart-title">Global Child Mortality Trends</h3>
-        <p class="muted small">Historical data points (deaths per 1000 live births globally)</p>
+						<label>
+								CO₂ Emissions Per Capita (tonnes)
+								<input type="number" id="co2" name="co2" value="5.2" min="0" step="0.1" required />
+								<input type="range" min="0" max="50" step="0.1" id="co2-slider" oninput="co2.value = this.value" />
+						</label>
 
-        <!-- Inline SVG bar chart (dummy data) -->
-        <div class="svg-wrap" role="img" aria-label="Bar chart of child mortality rates over time">
-          <svg viewBox="0 0 700 300" preserveAspectRatio="xMidYMid meet" class="chart-svg">
-            <!-- Y grid lines -->
-            <g class="grid">
-              <line x1="80" x2="680" y1="40" y2="40"></line>
-              <line x1="80" x2="680" y1="100" y2="100"></line>
-              <line x1="80" x2="680" y1="160" y2="160"></line>
-              <line x1="80" x2="680" y1="220" y2="220"></line>
-            </g>
+						<label>
+								Child Mortality Per 1000 Live Births
+								<input type="number" id="mortality" name="mortality" value="30" min="0" step="1" required />
+								<input type="range" min="0" max="1000"  id="mortality-slider" oninput="mortality.value = this.value" />
+						</label>
 
-            <!-- Bars (years: 2000,2005,2010,2015,2020,2023) -->
-            <g class="bars" transform="translate(0,0)">
-              <!-- bar: x, width, calculated height from data, positioned from bottom -->
-              <!-- scale: data values mapped to heights (0..100 -> 0..180) with base y at 260 -->
-              <rect class="bar" x="95"  y="80"  width="60" height="180" rx="8"></rect> <!-- 95 -> 2000 (≈95) -->
-              <rect class="bar" x="185" y="120" width="60" height="140" rx="8"></rect> <!-- 2005 (≈75) -->
-              <rect class="bar" x="275" y="160" width="60" height="100" rx="8"></rect> <!-- 2010 (≈60) -->
-              <rect class="bar" x="365" y="190" width="60" height="70"  rx="8"></rect> <!-- 2015 (≈45) -->
-              <rect class="bar" x="455" y="210" width="60" height="50"  rx="8"></rect> <!-- 2020 (≈35) -->
-              <rect class="bar" x="545" y="220" width="60" height="40"  rx="8"></rect> <!-- 2023 (≈30) -->
-            </g>
+						<div class="form-actions">
+								<button type="submit" class="btn primary" id="predict-btn">Predict Life Expectancy</button>
+						</div>
+				</form>
+		</section>
 
-            <!-- x-axis labels -->
-            <g class="xlabels" fill="#333" font-size="12" text-anchor="middle">
-              <text x="125" y="275">2000</text>
-              <text x="215" y="275">2005</text>
-              <text x="305" y="275">2010</text>
-              <text x="395" y="275">2015</text>
-              <text x="485" y="275">2020</text>
-              <text x="575" y="275">2023</text>
-            </g>
+		<!-- Predicted result -->
+		<section class="card result-card" aria-live="polite" aria-atomic="true">
+				<h3 class="result-title">Predicted Life Expectancy</h3>
+				<div class="result-value" id="result-value">
+						<span class="value-number">—</span>
+						<span class="value-unit">years</span>
+				</div>
+				<p id="result-text" class="muted small">Enter metrics and click Predict Life Expectancy.</p>
+		</section>
 
-            <!-- legend -->
-            <g transform="translate(520,18)" class="legend" font-size="12" fill="#333">
-              <rect x="0" y="-8" width="12" height="8" rx="2" class="legend-box"></rect>
-              <text x="18" y="-2">Child Mortality Rate</text>
-            </g>
-          </svg>
-        </div>
-      </section>
-    </main>
-  </div>
+		<!-- Chart -->
+		<!-- <section class="card chart-card" aria-labelledby="chart-title"> -->
+		<!--   <h3 id="chart-title">Global Child Mortality Trends</h3> -->
+		<!--   <p class="muted small">Historical data points (deaths per 1000 live births globally)</p> -->
+		<!--   <div class="svg-wrap"> -->
+		<!--   </div> -->
+		<!-- </section> -->
 
-  <!-- FOOTER -->
-  <footer class="site-footer">
-    <div class="container footer-inner">
-      <div class="footer-left">
-        <small>Resources</small>
-        <small class="sep">Legal</small>
-      </div>
-      <div class="footer-right">
-        <a href="#" class="social">🐦</a>
-        <a href="#" class="social">in</a>
-        <a href="#" class="social">git</a>
-      </div>
-    </div>
-  </footer>
+		{% block extra_scripts %}
 
-  <script src="{{url_for('static',filename='js/script.js')}}" defer></script>
-</body>
-</html>
+		<script>
+				const countryData = {{ country_data | tojson }};
+				document.getElementById('country-select').addEventListener('change', (e) => {
+						const data = countryData[e.target.value];
+						if (!data) return;
+						document.getElementById('gdp').value = data.gdp_pcap;
+						document.getElementById('gdp-slider').value = data.gdp_pcap;
+						document.getElementById('co2').value = data.co2_pcap;
+						document.getElementById('co2-slider').value = data.co2_pcap;
+						document.getElementById('mortality').value = data.child_mort_pcap;
+						document.getElementById('mortality-slider').value = data.child_mort_pcap;
+				});
+		</script>
+		{% endblock %}
+</main>
+{% endblock %}

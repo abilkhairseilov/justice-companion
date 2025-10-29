@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # load dataset
-dataset = pd.read_csv("data/dataset_preprocessed.csv")
+dataset = pd.read_csv("data/countries.csv")
 
 # split X and Y
 X = dataset[["gdp_pcap", "co2_pcap", "child_mort_pcap"]].values

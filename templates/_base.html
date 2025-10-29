@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{% block title %}LifePredictor{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner container">
+      <a class="brand" href="/" aria-label="LifePredictor Home">
+        <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="" class="brand-mark" />
+        <span class="brand-text">LifePredictor</span>
+      </a>
+
+      <nav class="top-nav" aria-label="Main Navigation">
+        <ul>
+          <li><a href="/" class="{% if request.path == '/' %}active{% endif %}">Dashboard</a></li>
+          <li><a href="/facts" class="{% if request.path == '/facts' %}active{% endif %}">Facts</a></li>
+          <li><a href="/about" class="{% if request.path == '/about' %}active{% endif %}">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="page container layout-grid">
+    {% block content %}{% endblock %}
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <small>Resources</small>
+        <small class="sep">Legal</small>
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>
